@@ -1,0 +1,12 @@
+.title {
+  text-align: center;
+  word-break: break-all;
+}
+
+.items {
+  max-width: 90vw;
+
+  > * + * {
+    margin: 1em 0;
+  }
+}

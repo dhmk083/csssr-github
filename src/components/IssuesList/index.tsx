@@ -5,7 +5,11 @@ import PageSizeSelector from "components/PageSizeSelector";
 import styles from "./styles.module.scss";
 import listIssues from "api/listIssues";
 import { ListIssuesResponse } from "types";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import Row from "components/Row";
+import Card from "components/Card";
+import ErrorBox from "components/ErrorBox";
+import Spinner from "components/Spinner";
 
 export default function IssuesList() {
   const { owner = "", repo = "" } = useParams();
@@ -23,29 +27,45 @@ export default function IssuesList() {
 
   return (
     <div className={styles.wrap}>
-      <div>
-        Репозиторий: {owner}/{repo}
-      </div>
+      <h2 className={styles.title}>
+        {owner}/{repo}
+      </h2>
 
-      {isPending && <p>Загрузка...</p>}
+      {isPending && <Spinner>Загрузка...</Spinner>}
 
-      {error && <p>Ошибка: {error.message}</p>}
+      {error && <ErrorBox>Ошибка: {error.message}</ErrorBox>}
 
-      {value?.total_count === 0 && <p>Нет обращений</p>}
+      {value?.total_count === 0 && <div>Нет обращений</div>}
 
       {value && (
         <div className={styles.items}>
           {value.items.map((x) => (
             <div key={x.id} className={styles.issue}>
-              <div className={styles.number}>#{x.number}</div>
-              <div className={styles.title}>{x.title}</div>
-              <div className={styles.date}>
-                {new Date(x.created_at).toLocaleString()}
-              </div>
+              <Card>
+                <Card.Header>
+                  <div className={styles.issueTitle}>
+                    <Link to={`/${owner}/${repo}/issues/${x.number}`}>
+                      {x.title}{" "}
+                    </Link>
+                  </div>
+                </Card.Header>
+
+                <div className={styles.issueBody}>
+                  <div>#{x.number}</div>
+                  <div>{x.user.login}</div>
+                  <div>{new Date(x.created_at).toLocaleString()}</div>
+                </div>
+              </Card>
             </div>
           ))}
-          <Pager page={page} totalPages={totalPages} onChange={setPage} />
-          <PageSizeSelector value={perPage} onChange={setPerPage} />
+
+          <Row>
+            <Pager page={page} totalPages={totalPages} onChange={setPage} />
+          </Row>
+
+          <Row>
+            <PageSizeSelector value={perPage} onChange={setPerPage} />
+          </Row>
         </div>
       )}
     </div>

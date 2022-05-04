@@ -4,3 +4,20 @@
   align-items: center;
   text-align: center;
 }
+
+.input {
+  margin-bottom: 1em;
+}
+
+.items {
+  max-width: 90vw;
+  overflow-wrap: break-word;
+
+  > * {
+    padding: 0.1em;
+  }
+
+  > *:nth-child(2n + 1) {
+    background: #eee;
+  }
+}

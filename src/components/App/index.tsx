@@ -3,6 +3,7 @@ import IssuesList from "components/IssuesList";
 import Search from "components/Search";
 import styles from "./styles.module.scss";
 import { BrowserRouter, Link, Navigate, Route, Routes } from "react-router-dom";
+import IssueDetails from "components/IssueDetails";
 
 export default function App() {
   return (
@@ -22,6 +23,8 @@ export default function App() {
 
             <Route path=":owner/:repo/issues">
               <Route index element={<IssuesList />} />
+
+              <Route path=":issueId" element={<IssueDetails />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" />} />

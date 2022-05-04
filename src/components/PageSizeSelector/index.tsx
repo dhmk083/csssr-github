@@ -1,4 +1,6 @@
 import { useInput } from "@dhmk/react";
+import Stack from "components/Stack";
+import styles from "./styles.module.scss";
 
 type Props = {
   value: number;
@@ -10,12 +12,12 @@ export default function PageSizeSelector({ value, onChange }: Props) {
   const changed = input.value !== value.toString();
 
   return (
-    <div>
-      Кол-во результатов на странице:
-      <input type="number" {...input} />
+    <Stack>
+      <span>Кол-во результатов на странице:</span>
+      <input type="number" {...input} className={styles.input} />
       {changed && (
         <button onClick={() => onChange(Math.floor(+input.value))}>OK</button>
       )}
-    </div>
+    </Stack>
   );
 }

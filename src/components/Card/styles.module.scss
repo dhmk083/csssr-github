@@ -1,0 +1,13 @@
+.card {
+  border: 1px solid darken(#eee, 10);
+  border-radius: 5px;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  background: #eee;
+  border-bottom: 1px solid darken(#eee, 10);
+  padding: 0 1em;
+}
