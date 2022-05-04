@@ -1,9 +1,13 @@
 import React from "react";
-import { useInput, usePromise } from "@dhmk/react";
+import { useInput, usePromise, useEffectUpdate } from "@dhmk/react";
+import Pager from "components/Pager";
+import PageSizeSelector from "components/PageSizeSelector";
 import styles from "./styles.module.scss";
 
 export default function Search() {
   const input = useInput();
+  const [page, setPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(30);
   const [{ isPending, value, error }, capture] = usePromise<any>();
 
   const search = () => {
@@ -14,6 +18,8 @@ export default function Search() {
         "https://api.github.com/search/issues?" +
           new URLSearchParams({
             q: "is:issue repo:" + input.value,
+            page: page.toString(),
+            per_page: pageSize.toString(),
           }),
         {
           headers: {
@@ -40,6 +46,10 @@ export default function Search() {
     );
   };
 
+  useEffectUpdate(search, [page, pageSize]);
+
+  const totalPages = Math.ceil(value?.total_count / page);
+
   return (
     <div className={styles.wrap}>
       <div className={styles.searchBox}>
@@ -64,6 +74,8 @@ export default function Search() {
               </div>
             </div>
           ))}
+          <Pager page={page} totalPages={totalPages} onChange={setPage} />
+          <PageSizeSelector value={pageSize} onChange={setPageSize} />
         </div>
       )}
     </div>
