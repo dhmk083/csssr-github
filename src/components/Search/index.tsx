@@ -4,6 +4,7 @@ import { debounced } from "@dhmk/utils";
 import _search from "api/search";
 import { SearchResponse } from "types";
 import styles from "./styles.module.scss";
+import { Link } from "react-router-dom";
 
 const search = debounced(_search, 300);
 
@@ -28,7 +29,9 @@ export default function Search() {
 
       {value?.items.map((x) => (
         <div key={x.id}>
-          <p>{x.full_name}</p>
+          <p>
+            <Link to={`/${x.owner.login}/${x.name}/issues`}>{x.full_name}</Link>
+          </p>
           <p>{x.description}</p>
         </div>
       ))}

@@ -1,38 +1,33 @@
 import React from "react";
-import { useInput, usePromise, useEffectUpdate } from "@dhmk/react";
+import { usePromise } from "@dhmk/react";
 import Pager from "components/Pager";
 import PageSizeSelector from "components/PageSizeSelector";
 import styles from "./styles.module.scss";
 import listIssues from "api/listIssues";
 import { ListIssuesResponse } from "types";
+import { useParams } from "react-router-dom";
 
 export default function IssuesList() {
-  const input = useInput();
+  const { owner = "", repo = "" } = useParams();
+
   const [page, setPage] = React.useState(1);
   const [perPage, setPerPage] = React.useState(30);
   const [{ isPending, value, error }, capture] =
     usePromise<ListIssuesResponse>();
 
-  const search = () => {
-    if (!input.value) return;
-
-    const [owner, repo] = input.value.split("/");
-
+  React.useEffect(() => {
     capture(listIssues({ owner, repo, page, perPage }));
-  };
-
-  useEffectUpdate(search, [page, perPage]);
+  }, [capture, owner, repo, page, perPage]);
 
   const totalPages = Math.ceil(value?.total_count ?? 0 / page);
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.searchBox}>
-        <input {...input} />
-        <button onClick={search}>Поиск</button>
+      <div>
+        Репозиторий: {owner}/{repo}
       </div>
 
-      {isPending && <p>Поиск...</p>}
+      {isPending && <p>Загрузка...</p>}
 
       {error && <p>Ошибка: {error.message}</p>}
 
