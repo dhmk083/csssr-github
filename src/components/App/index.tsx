@@ -1,4 +1,5 @@
 import React from "react";
+import IssuesList from "components/IssuesList";
 import Search from "components/Search";
 import styles from "./styles.module.scss";
 

@@ -1144,6 +1144,11 @@
   resolved "https://registry.yarnpkg.com/@dhmk/react/-/react-3.7.2.tgz#6cdba618e3d9acb54145bae0f66df9025449e18b"
   integrity sha512-Feeas3gAGmdCN3b8oZFZqIf/64G35lmGe+g2fXyZiit0gcUEP7iae7Ps33mBZhZ/2S9MoHyD6E3Wr5wNOZYN8A==
 
+"@dhmk/utils@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@dhmk/utils/-/utils-4.0.1.tgz#23189342575da7a1166db20a7d6b72271e473450"
+  integrity sha512-t1DtGWsvrdCV2pUv4mu9OH0RUWcsYEmTwI18ei3vPs0QAOCoxPqaPZ9TQSMQmlo6LktRlVSboy+ak7Mu62u3Iw==
+
 "@eslint/eslintrc@^1.2.2":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.2.2.tgz#4989b9e8c0216747ee7cca314ae73791bb281aae"
