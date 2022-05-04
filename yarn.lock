@@ -1139,6 +1139,11 @@
   resolved "https://registry.yarnpkg.com/@csstools/postcss-unset-value/-/postcss-unset-value-1.0.0.tgz#f6e0e58376f09e381a49bd553772a97a477da3fd"
   integrity sha512-T5ZyNSw9G0x0UDFiXV40a7VjKw2b+l4G+S0sctKqxhx8cg9QtMUAGwJBVU9mHPDPoZEmwm0tEoukjl4zb9MU7Q==
 
+"@dhmk/react@^3.7.2":
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/@dhmk/react/-/react-3.7.2.tgz#6cdba618e3d9acb54145bae0f66df9025449e18b"
+  integrity sha512-Feeas3gAGmdCN3b8oZFZqIf/64G35lmGe+g2fXyZiit0gcUEP7iae7Ps33mBZhZ/2S9MoHyD6E3Wr5wNOZYN8A==
+
 "@eslint/eslintrc@^1.2.2":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.2.2.tgz#4989b9e8c0216747ee7cca314ae73791bb281aae"
