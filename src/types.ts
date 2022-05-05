@@ -12,3 +12,8 @@ export type Issue = {
   issue: IssueResponse;
   comments: IssueCommentsResponse;
 };
+
+export type PageState = {
+  page: number;
+  perPage: number;
+};

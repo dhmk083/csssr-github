@@ -1,29 +1,42 @@
 import React from "react";
-import { usePromise } from "@dhmk/react";
 import Pager from "components/Pager";
 import PageSizeSelector from "components/PageSizeSelector";
 import styles from "./styles.module.scss";
-import listIssues from "api/listIssues";
-import { ListIssuesResponse } from "types";
-import { Link, useParams } from "react-router-dom";
+import { ListIssuesResponse, PageState } from "types";
+import { Link } from "react-router-dom";
 import Row from "components/Row";
 import Card from "components/Card";
 import ErrorBox from "components/ErrorBox";
 import Spinner from "components/Spinner";
+import listIssues from "api/listIssues";
 
-export default function IssuesList() {
-  const { owner = "", repo = "" } = useParams();
+type Props = {
+  owner: string;
+  repo: string;
+  isLoading: boolean;
+  data?: ListIssuesResponse;
+  error?: Error;
+  pager: PageState;
+  listIssues(...args: Parameters<typeof listIssues>);
+};
 
-  const [page, setPage] = React.useState(1);
-  const [perPage, setPerPage] = React.useState(30);
-  const [{ isPending, value, error }, capture] =
-    usePromise<ListIssuesResponse>();
+export default function IssuesList({
+  owner,
+  repo,
+  isLoading,
+  data,
+  error,
+  pager,
+  listIssues,
+}: Props) {
+  const [page, setPage] = React.useState(pager.page);
+  const [perPage, setPerPage] = React.useState(pager.perPage);
 
   React.useEffect(() => {
-    capture(listIssues({ owner, repo, page, perPage }));
-  }, [capture, owner, repo, page, perPage]);
+    listIssues({ owner, repo, page, perPage });
+  }, [listIssues, owner, repo, page, perPage]);
 
-  const totalPages = Math.ceil(value?.total_count ?? 0 / page);
+  const totalPages = Math.ceil(data?.total_count ?? 0 / page);
 
   return (
     <div className={styles.wrap}>
@@ -31,15 +44,15 @@ export default function IssuesList() {
         {owner}/{repo}
       </h2>
 
-      {isPending && <Spinner>Загрузка...</Spinner>}
+      {isLoading && <Spinner>Загрузка...</Spinner>}
 
       {error && <ErrorBox>Ошибка: {error.message}</ErrorBox>}
 
-      {value?.total_count === 0 && <div>Нет обращений</div>}
+      {data?.total_count === 0 && <div>Нет обращений</div>}
 
-      {value && (
+      {data && (
         <div className={styles.items}>
-          {value.items.map((x) => (
+          {data.items.map((x) => (
             <div key={x.id} className={styles.issue}>
               <Card>
                 <Card.Header>
@@ -60,11 +73,15 @@ export default function IssuesList() {
           ))}
 
           <Row>
-            <Pager page={page} totalPages={totalPages} onChange={setPage} />
+            <Pager
+              page={pager.page}
+              totalPages={totalPages}
+              onChange={setPage}
+            />
           </Row>
 
           <Row>
-            <PageSizeSelector value={perPage} onChange={setPerPage} />
+            <PageSizeSelector value={pager.perPage} onChange={setPerPage} />
           </Row>
         </div>
       )}
