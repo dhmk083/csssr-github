@@ -26,7 +26,7 @@ export default function Search({ isLoading, data, error, search }: Props) {
 
   return (
     <div className={styles.wrap}>
-      <input {...input} className={styles.input} />
+      <input {...input} className={styles.input} aria-label="Поиск" />
 
       {isLoading && <Spinner>Поиск...</Spinner>}
 
